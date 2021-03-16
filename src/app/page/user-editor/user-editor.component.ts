@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { User } from 'src/app/model/user';
@@ -32,9 +32,32 @@ export class UserEditorComponent implements OnInit {
   constructor(
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
-  }
 
+  this.activatedRoute.params.subscribe((params) => {
+    if (params.id == 0) {
+      this.user = new User();
+  
+    } else
+      this.userService.get(params.id).subscribe((item) => {
+        this.user = params;
+  
+      });
+  });
+}
+
+  onUpdate(form: NgForm, params: User): void {
+
+      if (params.id == 0) {
+        this.userService.create(params).subscribe(() => {});
+        this.router.navigate(['']);
+      }
+      else {
+        this.userService.update(params).subscribe(() => {});
+        this.router.navigate(['']);
+      }
+  }
 }

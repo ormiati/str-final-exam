@@ -10,7 +10,12 @@
         class="form-control"
         type="text"
         name="name"
-        [(ngModel)]="user.name">
+        [(ngModel)]="user.name"
+        pattern="^[A-Z,ÁÉÍÓÖŐÚÜŰ]{1}[a-z,áéíóöőúüű]{8,39}"
+        required>
+      </div>
+      <div [hidden]="userForm.controls.name?.valid || userForm.controls.name.pristine" class="error-message">
+        Legalább 8, maximum 40 karakterből kell állnia!
       </div>
       <div class="form-group">
         <label>Email</label>
@@ -20,7 +25,12 @@
           class="form-control"
           type="text"
           name="email"
-          [(ngModel)]="user.email">
+          [(ngModel)]="user.email"
+          pattern="^.{3,}@{1}.{3,}\.{1}[a-z]{2,}$"
+          required>
+        </div>
+        <div [hidden]="userForm.controls.email?.valid || userForm.controls.email.pristine" class="error-message">
+          Legalább 10 karakterből kell állnia, @ és . karaktert is kell tartalmaznia. (Minta: xyz@abc.hu)
         </div>
         <div class="form-group">
           <label>Address</label>
@@ -29,7 +39,12 @@
           class="form-control"
           type="text"
           name="address"
-          [(ngModel)]="user.address">
+          [(ngModel)]="user.address"
+          pattern="^[A-Z,ÁÉÍÓÖŐÚÜŰ]{1}[a-z,áéíóöőúüű]{8,99}"
+          required>
+      </div>
+      <div [hidden]="userForm.controls.address?.valid || userForm.controls.address.pristine" class="error-message">
+        Legalább 8, maximum 100 karakterből kell állnia!
       </div>
       <div class="form-group">
         <label>Active</label>
@@ -39,7 +54,7 @@
           <option [ngValue]="false">inactive</option>
         </select>
       </div>
-      <button type="submit" class="btn btn-primary btn-block mt-5">
+      <button [disabled]="userForm.invalid" type="submit" class="btn btn-primary btn-block mt-5">
         <i class="fa fa-save"></i>
       </button>
     </form>

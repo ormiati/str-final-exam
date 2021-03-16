@@ -5,3 +5,11 @@ export class User {
   address: string = '';
   active: boolean = true;
 }
+
+export class Column{
+  name:string="";
+  title:string="";
+  type:string="";
+  sortDir:string="";
+}
+
